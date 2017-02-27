@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menbris</title>
+    <link rel="stylesheet"  href="jqm/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+	
+    <script src="jqm/demos/js/jquery.js"></script>
+    <script src="jqm/demos/js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
+</head>
+<body>
+    <section id="login" data-role="page">
+        <header data-role="header">
+            <h1>Login Cuaderno de comunicaciones</h1>
+        </header>
+        <article data-role="content">
+            <form id="form_login">
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <label for="txtuser">Nombre:</label>
+                    <input type="text" name="txtuser" id="txtuser" value="" placeholder="Nombre" />
+                </div>
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <label for="txtpassword">Contraseña:</label>
+                    <input type="password" name="txtpassword" id="txtpassword" value="" placeholder="Contraseña" />
+                </div>
+                <select name="select-choice-0" id="txtperfil">
+					<option value"1">Padre</option>
+					<option value"2">Profesor</option>
+				</select>
+                <input type="button" value="Login" id="btnLogin">
+                <center>
+                <a href="registrar_usuario.html" type="button" id="btnRegistrar">Registrar</a>
+                </center>
+            </form>
+             <!--<div id="errorMsg" style="background-color:red;color: #FFFFFF;">Usuario o Contraseña no valida</div>-->
+        </article>
+    </section>
+    <!-- Aqui nuestro dialog con el mensaje de error  -->
+    <section id="pageError" data-role="dialog">
+        <header data-role="header">
+            <h1>Error</h1>
+        </header>
+        <article data-role="content">
+            <p>Usuario o contraseña no valida</p>
+            <a href="#" data-role="button" data-rel="back">Aceptar</a>
+        </article>
+    </section>
+</body>
+</html>
