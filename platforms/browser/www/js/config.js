@@ -1,4 +1,4 @@
 function getUrl()
 {
-	return 'http://localhost/benbrisBack/';
+	return 'http://localhost/tesis2/';
 }

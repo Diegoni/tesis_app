@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tesis app</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<link rel="stylesheet" href="jqm/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+	
+	<script src="jqm/demos/js/jquery.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/menu.js"></script>
+	<script src="js/estadisticas_animales.js"></script>
+	<script src="jqm/demos/_assets/js/index.js"></script>
+	<script src="jqm/demos/js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/Highcharts-6.0.6/code/highcharts.js"></script> 
+
+	<style id="custom-icon">
+        .ui-icon-custom:after {
+			background-image: url("jqm/demos/_assets/img/glyphish-icons/21-skull.png");
+			background-position: 3px 3px;
+			background-size: 70%;
+		}
+    </style>
+
+    
+    <link rel="stylesheet" href="jqm/demos/_assets/css/jqm-demos.css">
+</head>
+<body>
+	<div data-role="page" id="pageone">
+		<div data-role="panel" id="myPanel"> 
+			<h2>Menu principal <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b">Open Panel</a></h2>
+			<div role="main" class="ui-content jqm-content">
+	    		<ul data-role="listview" class="menu">
+				</ul>
+  			</div> 
+   		</div> 
+
+		<div data-role="main" class="ui-content">
+			<div role="main" class="ui-content jqm-content">
+				<h2 class="bandeja_entrada">Animales <a href="#myPanel" class="flotante ui-btn ui-btn-inline ui-corner-all ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b">Open Panel</a></h2>
+				<div id="container"></div>
+				</ul>
+			</div>
+  		</div>
+	</div> 
+</body>
+</html>
+
+
+
+<script>
+$(function () 
+{
+	var processed_json = new Array();   
+	var url_back = getUrl();
+	$.getJSON(url_back+"index.php/ordenes/app", function(data) 
+	{
+		// Cargamos el array con los datos
+		$.each(data, function(index, element) {
+			processed_json.push([element.date_add.substring(0, 11), parseFloat(element.cantidad)]);
+		});
+
+		// Creamos el grafico
+		$('#container').highcharts({
+		    chart: {
+		    	type: "column"
+		    },
+			title: {
+				text: "Ordeñe del animal 1"
+			},
+			xAxis: {
+				type: 'category',
+				allowDecimals: false,
+				title: {
+					text: ""
+				}
+			},
+			yAxis: {
+				title: {
+					text: "Cantidad en litros"
+		 		}
+			},
+			series: [{
+				name: 'Animal 1',
+				data: processed_json
+			}]
+		}); 
+	});
+});
+</script>
