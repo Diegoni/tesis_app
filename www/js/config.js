@@ -1,4 +1,5 @@
 function getUrl()
 {
-	return 'http://192.168.1.35/tesis2/';
+	return 'http://192.168.0.40/tesis2/';
+	//return 'http://localhost/tesis2/';
 }
