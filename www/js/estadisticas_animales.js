@@ -1,5 +1,6 @@
 $(function() {
 	var url_back = getUrl();
+	
 	$.ajax({
 	    type:"GET", 
 	    url: url_back+"index.php/animales/estadisticas", 

@@ -10,8 +10,6 @@
 	
 	<script src="jqm/demos/js/jquery.js"></script>
 	<script src="js/config.js"></script>
-	<script src="js/menu.js"></script>
-	<script src="js/estadisticas_animales.js"></script>
 	<script src="jqm/demos/_assets/js/index.js"></script>
 	<script src="jqm/demos/js/jquery.mobile-1.4.5.min.js"></script>
 	<script src="js/Highcharts-6.0.6/code/highcharts.js"></script> 
@@ -33,15 +31,19 @@
 			<h2>Menu principal <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b">Open Panel</a></h2>
 			<div role="main" class="ui-content jqm-content">
 	    		<ul data-role="listview" class="menu">
+	    			<li><a href="estadisticas_animales.html">Animales</a></li>
+					<li><a href="estadisticas_ventas.html">Ventas</a></li>
+					<li><a href="estadisticas_compras.html">Compras</a></li>
+					<li><a href="graficos.html">Estadisticas</a></li>
 				</ul>
   			</div> 
    		</div> 
-		<input type="button" value="Cargar datos" onClick="window.location.href=window.location.href">
 		
 		<div data-role="main" class="ui-content">
 			<div role="main" class="ui-content jqm-content">
 				<h2 class="bandeja_entrada">Animales <a href="#myPanel" class="flotante ui-btn ui-btn-inline ui-corner-all ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b">Open Panel</a></h2>
 				<div id="container"></div>
+				<div id="grafico"></div>
 				</ul>
 			</div>
   		</div>
@@ -54,40 +56,112 @@
 <script>
 $(function () 
 {
-	var processed_json = new Array();   
-	var url_back = getUrl();
-	$.getJSON(url_back+"index.php/ordenes/app", function(data) 
-	{
-		// Cargamos el array con los datos
-		$.each(data, function(index, element) {
-			processed_json.push([element.date_add.substring(0, 11), parseFloat(element.cantidad)]);
-		});
+	
+	Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Litros de leche por animal'
+    },
+    xAxis: {
+        categories: ['2018-01 ', '2018-02', '2018-03', '2018-04', '2018-05']
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total litros'
+        },
+        stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+        }
+    },
+    legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+    },
+    tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true,
+                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+            }
+        }
+    },
+    series: [{
+        name: 'Id:1',
+        data: [5, 3, 4, 7, 2]
+    }, {
+        name: 'Id:2',
+        data: [2, 2, 3, 2, 1]
+    }, {
+        name: 'Id:3',
+        data: [3, 4, 4, 2, 5]
+    }]
+});
 
-		// Creamos el grafico
-		$('#container').highcharts({
-		    chart: {
-		    	type: "column"
-		    },
-			title: {
-				text: "Ordeñe del animal 1"
-			},
-			xAxis: {
-				type: 'category',
-				allowDecimals: false,
-				title: {
-					text: ""
-				}
-			},
-			yAxis: {
-				title: {
-					text: "Cantidad en litros"
-		 		}
-			},
-			series: [{
-				name: 'Animal 1',
-				data: processed_json
-			}]
-		}); 
-	});
+
+
+
+Highcharts.chart('grafico', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Estado de los animales'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Ok',
+            y: 61.41,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Maternidad',
+            y: 11.84
+        }, {
+            name: 'Control',
+            y: 10.85
+        }, {
+            name: 'Cuarentena',
+            y: 2.67
+        }]
+    }]
+});
+	
 });
 </script>
